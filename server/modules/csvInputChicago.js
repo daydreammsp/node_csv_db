@@ -5,14 +5,14 @@ const csv=require('csvtojson')
 csv()
 .fromFile(csvFilePath)
 .then((jsonObj)=>{
-     console.log(jsonObj)
+     
     (async () => {
         //creates async function
         const client = await pool.connect();
         // await will wait for a return on the given function and then do something
         try {
             await client.query('BEGIN') // tells DB to be ready for multiple lines of queries
-            for (i = 0; i < jsonObj.length; i++) {
+            for (i = 0; i < 5; i++) {
             let queryText = `INSERT INTO inspections ("inspection_id",
             "dba_name", 
            "aka_name",
@@ -45,8 +45,8 @@ csv()
                 jsonObj[i]['Inspection Type'],
                 jsonObj[i]['Results'],
                 jsonObj[i]['Violations'],
-                jsonObj[i]['latitude'],
-                jsonObj[i]['longitude']])
+                jsonObj[i]['Latitude'],
+                jsonObj[i]['Longitude']])
             }
            
              await client.query('COMMIT');
