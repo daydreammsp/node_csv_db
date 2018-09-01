@@ -1,18 +1,30 @@
 const pool = require('../modules/pool');
-const csvFilePath='/Users/jonathan/Desktop/Food_Inspections.csv'
+const csvFilePath='/Users/jonathan/Desktop/mayorsfoodcourt2.csv'
 const csv=require('csvtojson')
 
 csv()
 .fromFile(csvFilePath)
 .then((jsonObj)=>{
-     
+    
+    //  for (i = 0; i < 3; i++) {
+         
+    //      let newLocation = jsonObj[i].Location.split(',')
+    //         let  latitude= newLocation[0].split('(')
+    //         let longitude = newLocation[1].split(')')
+    //       console.log( latitude[1], longitude[0] )
+        
+    //  }
     (async () => {
         //creates async function
         const client = await pool.connect();
         // await will wait for a return on the given function and then do something
         try {
             await client.query('BEGIN') // tells DB to be ready for multiple lines of queries
-            for (i = 0; i < jsonObj.length; i++) {
+            for (i = 0; i < 5; i++) {
+                let newLocation = jsonObj[i].Location.split(',')
+            let  latitude= newLocation[0].split('(')
+            let longitude = newLocation[1].split(')')
+          
             let queryText = `INSERT INTO inspections ("inspection_id",
             "dba_name", 
            "aka_name",
@@ -32,21 +44,21 @@ csv()
 
              let result1 = await client.query(queryText, [ 
                 jsonObj[i]['Inspection ID'],
-                jsonObj[i]['DBA Name'],
-                jsonObj[i]['AKA Name'],
-                jsonObj[i]['License #'],
-                jsonObj[i]['Facility Type'],
-                jsonObj[i]['Risk'],
+                jsonObj[i]['DBAName'],
+                jsonObj[i]['businessName'],
+                jsonObj[i]['LICENSENO'],
+                jsonObj[i]['DESCRIPT'],
+                jsonObj[i]['ViolLevel'],
                 jsonObj[i]['Address'],
-                jsonObj[i]['City'],
-                jsonObj[i]['State'],
-                jsonObj[i]['Zip'],
-                jsonObj[i]['Inspection Date'],
+                jsonObj[i]['CITY'],
+                jsonObj[i]['STATE'],
+                jsonObj[i]['ZIP'],
+                jsonObj[i]['VIOLDTTM'],
                 jsonObj[i]['Inspection Type'],
-                jsonObj[i]['Results'],
-                jsonObj[i]['Violations'],
-                jsonObj[i]['latitude'],
-                jsonObj[i]['longitude']])
+                jsonObj[i]['ViolStatus'],
+                jsonObj[i]['ViolDesc'],
+                latitude[1],
+                longitude[0]])
             }
            
              await client.query('COMMIT');
