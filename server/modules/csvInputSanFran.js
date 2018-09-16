@@ -13,6 +13,20 @@ csv()
         try {
             await client.query('BEGIN') // tells DB to be ready for multiple lines of queries
             for (i = 0; i < 5; i++) {
+                let risk;
+                switch(jsonObj[i]['risk_category']) {
+                    case 'Low Risk':
+                        risk = 'Low'
+                        break;
+                    case 'Moderate Risk':
+                        risk = 'Medium'
+                        break;
+                    case 'High Risk':
+                        risk = 'High'
+                        break;
+                    default:
+                        risk = 'risk missing'
+                }
             let queryText = `INSERT INTO inspections ("inspection_id",
             "dba_name", 
            "aka_name",
@@ -34,9 +48,9 @@ csv()
                 jsonObj[i]['inspection_id'],
                 jsonObj[i]['business_id'],
                 jsonObj[i]['business_name'],
-                jsonObj[i]['License #'],
+                jsonObj[i]['inspection_id'],
                 jsonObj[i]['Facility Type'],
-                jsonObj[i]['risk_category'],
+                risk,
                 jsonObj[i]['business_address'],
                 jsonObj[i]['business_city'],
                 jsonObj[i]['business_state'],

@@ -4,12 +4,12 @@ $(function() {
     $('button').click(function() {
         let column = $('#input1').val()
         let search = $('#input2').val()
-        $.ajax({
-            type: "POST",
-            url: '/',
-            data: {column,search},
-            success: 'great',
-            dataType: 'all'
-          });
+        $.post( "/", {column,search})
+            .done(function(data) {
+                console.log(data)
+                $('#input1').val('')
+                $('#input2').val('')
+            });
+        
       });
 });

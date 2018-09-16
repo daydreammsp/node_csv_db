@@ -6,18 +6,21 @@ const router = express.Router();
 
 
     router.post('/', (req, res) => {
-        console.log("logged http",req.body)
-        // let columName = req.body.colum
-        // let queryVar = req.body.query
-        // let queryText = `SELECT * FROM inspections
-        // WHERE ${columName} LIKE '%${queryVar}%'`;
-        // pool.query(queryText)
-        //  .then((result)=>{
-        // res.sendStatus(201);
-        // }).catch((err)=>{
-        // console.log(err);
-        // res.sendStatus(500)
-        // })
+        
+        let columnName = req.body.column
+        let queryVar = req.body.search
+        console.log("logged http", columnName,queryVar)
+        let queryText = `SELECT * FROM inspections
+        WHERE ${columnName} LIKE '%${queryVar}%';`
+        pool.query(queryText)
+         .then((result)=>{
+             console.log(result.rows)
+        res.send(result.rows);
+        }).catch((err)=>{
+        console.log(err);
+        res.sendStatus(500)
+        })
+        
 })
 
        

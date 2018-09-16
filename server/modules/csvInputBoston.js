@@ -6,14 +6,6 @@ csv()
 .fromFile(csvFilePath)
 .then((jsonObj)=>{
     
-    //  for (i = 0; i < 3; i++) {
-         
-    //      let newLocation = jsonObj[i].Location.split(',')
-    //         let  latitude= newLocation[0].split('(')
-    //         let longitude = newLocation[1].split(')')
-    //       console.log( latitude[1], longitude[0] )
-        
-    //  }
     (async () => {
         //creates async function
         const client = await pool.connect();
