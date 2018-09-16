@@ -27,6 +27,8 @@ csv()
                     default:
                         risk = 'risk missing'
                 }
+                let inspectionDate = jsonObj[i]['inspection_date'].split(' ');
+                let newDate = inspectionDate[0]
             let queryText = `INSERT INTO inspections ("inspection_id",
             "dba_name", 
            "aka_name",
@@ -48,15 +50,14 @@ csv()
                 jsonObj[i]['inspection_id'],
                 jsonObj[i]['business_id'],
                 jsonObj[i]['business_name'],
-                jsonObj[i]['inspection_id'],
-                jsonObj[i]['Facility Type'],
+                'not provided',
+                'not provided',
                 risk,
                 jsonObj[i]['business_address'],
                 jsonObj[i]['business_city'],
                 jsonObj[i]['business_state'],
                 jsonObj[i]['business_postal_code'],
-                jsonObj[i]['inspection_date'],
-                jsonObj[i]['nspection_type'],
+                newDate,
                 jsonObj[i]['inspection_score'],
                 jsonObj[i]['violation_description'],
                 jsonObj[i]['business_latitude'],
